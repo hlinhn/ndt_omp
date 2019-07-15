@@ -134,6 +134,7 @@ pclomp::NormalDistributionsTransform<PointSource, PointTarget>::computeTransform
     if (delta_p_norm == 0 || delta_p_norm != delta_p_norm)
     {
       trans_probability_ = score / static_cast<double> (input_->points.size ());
+      cov_matrix_inv_ = hessian;
       converged_ = delta_p_norm == delta_p_norm;
       return;
     }
@@ -168,6 +169,7 @@ pclomp::NormalDistributionsTransform<PointSource, PointTarget>::computeTransform
   // Store transformation probability.  The realtive differences within each scan registration are accurate
   // but the normalization constants need to be modified for it to be globally accurate
   trans_probability_ = score / static_cast<double> (input_->points.size ());
+  cov_matrix_inv_ = hessian;
 }
 
 #ifndef _OPENMP

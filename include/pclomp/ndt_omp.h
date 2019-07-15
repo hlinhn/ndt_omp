@@ -193,6 +193,12 @@ namespace pclomp
 			return (trans_probability_);
 		}
 
+		void 
+		  getCovariance(Eigen::Matrix<double, 6, 6>& cov_mat) const
+		  {
+		    cov_mat = cov_matrix_inv_;
+		  }
+		
 		/** \brief Get the number of iterations required to calculate alignment.
 		  * \return final number of iterations
 		  */
@@ -459,7 +465,7 @@ namespace pclomp
 
 		/** \brief The probability score of the transform applied to the input cloud, Equation 6.9 and 6.10 [Magnusson 2009]. */
 		double trans_probability_;
-
+		Eigen::Matrix<double, 6, 6> cov_matrix_inv_;
 		/** \brief Precomputed Angular Gradient
 		  *
 		  * The precomputed angular derivatives for the jacobian of a transformation vector, Equation 6.19 [Magnusson 2009].
