@@ -63,7 +63,7 @@ target_link_libraries(align
 )
 
 install(DIRECTORY include/pclomp/
-  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+  DESTINATION ${CATKIN_GLOBAL_INCLUDE_DESTINATION}/pclomp
   FILES_MATCHING PATTERN "*.h"
   )
 
