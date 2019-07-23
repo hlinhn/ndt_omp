@@ -113,6 +113,7 @@ namespace pclomp
 		/** \brief Provide a pointer to the input target (e.g., the point cloud that we want to align the input source to).
 		  * \param[in] cloud the input point cloud target
 		  */
+    void setInputPrecompute(const PointCloudTargetConstPtr &cloud);
 		inline void
 			setInputTarget(const PointCloudTargetConstPtr &cloud)
 		{
