@@ -113,13 +113,32 @@ namespace pclomp
 		/** \brief Provide a pointer to the input target (e.g., the point cloud that we want to align the input source to).
 		  * \param[in] cloud the input point cloud target
 		  */
-    void setInputPrecompute(const PointCloudTargetConstPtr &cloud);
-		inline void
-			setInputTarget(const PointCloudTargetConstPtr &cloud)
-		{
-			pcl::Registration<PointSource, PointTarget>::setInputTarget(cloud);
-			init();
-		}
+    void setInputPrecompute(const PointCloudTargetConstPtr &cloud) {
+      pcl::Registration<PointSource, PointTarget>::setInputTarget(cloud);
+      init();
+      pcl::Registration<PointSource, PointTarget>::tree_->setInputCloud (pcl::Registration<PointSource, PointTarget>::target_);
+      pcl::Registration<PointSource, PointTarget>::target_cloud_updated_ = false;
+    }
+    /********
+template<typename PointSource, typename PointTarget>
+void pclomp::NormalDistributionsTransform<PointSource, PointTarget>::setInputPrecompute(const PointCloudTargetConstPtr &cloud) {
+  pcl::Registration<PointSource, PointTarget>::setInputTarget(cloud);
+  init();
+  
+  // Update the correspondence estimation
+  if (pcl::Registration<PointSource, PointTarget>::correspondence_estimation_)
+  {
+    pcl::Registration<PointSource, PointTarget>::correspondence_estimation_->setSearchMethodTarget (pcl::Registration<PointSource, PointTarget>::tree_, pcl::Registration<PointSource, PointTarget>::force_no_recompute_);
+    pcl::Registration<PointSource, PointTarget>::correspondence_estimation_->setSearchMethodSource (pcl::Registration<PointSource, PointTarget>::tree_reciprocal_, pcl::Registration<PointSource, PointTarget>::force_no_recompute_reciprocal_);
+  }
+}
+    */
+    inline void
+      setInputTarget(const PointCloudTargetConstPtr &cloud)
+    {
+      pcl::Registration<PointSource, PointTarget>::setInputTarget(cloud);
+      init();
+    }
 
 		/** \brief Set/change the voxel grid resolution.
 		  * \param[in] resolution side length of voxels

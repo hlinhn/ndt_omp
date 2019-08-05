@@ -76,21 +76,6 @@ pclomp::NormalDistributionsTransform<PointSource, PointTarget>::NormalDistributi
 }
 ///////////////////
 
-template<typename PointSource, typename PointTarget>
-void pclomp::NormalDistributionsTransform<PointSource, PointTarget>::setInputPrecompute(const PointCloudTargetConstPtr &cloud) {
-  pcl::Registration<PointSource, PointTarget>::setInputTarget(cloud);
-  init();
-  pcl::Registration<PointSource, PointTarget>::tree_->setInputCloud (cloud);
-  pcl::Registration<PointSource, PointTarget>::target_cloud_updated_ = false;
-  
-  // Update the correspondence estimation
-  if (pcl::Registration<PointSource, PointTarget>::correspondence_estimation_)
-  {
-    pcl::Registration<PointSource, PointTarget>::correspondence_estimation_->setSearchMethodTarget (pcl::Registration<PointSource, PointTarget>::tree_, pcl::Registration<PointSource, PointTarget>::force_no_recompute_);
-    pcl::Registration<PointSource, PointTarget>::correspondence_estimation_->setSearchMethodSource (pcl::Registration<PointSource, PointTarget>::tree_reciprocal_, pcl::Registration<PointSource, PointTarget>::force_no_recompute_reciprocal_);
-  }
-}
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename PointSource, typename PointTarget> void
 pclomp::NormalDistributionsTransform<PointSource, PointTarget>::computeTransformation (PointCloudSource &output, const Eigen::Matrix4f &guess)
